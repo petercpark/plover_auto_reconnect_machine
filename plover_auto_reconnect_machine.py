@@ -44,6 +44,9 @@ class AutoReconnectMachine:
                     log.info('plover-auto-reconnect-machine: machine can not be reconnected, retrying later')
                 else:
                     log.info('plover-auto-reconnect-machine: machine is disconnected, trying to reconnect')
+                    sk_port = self._sk_port()
+                    if sk_port:
+                        self._engine._machine.serial_params['port'] = sk_port
                     self._engine.reset_machine()
 
                 # prevent busy endless loop, just check again in one second
@@ -68,3 +71,9 @@ class AutoReconnectMachine:
             if port.manufacturer == "StenoKeyboards":
                 return True
         return False
+    
+    def _sk_port(self):
+        for port in list_ports.comports():
+            if port.manufacturer == "StenoKeyboards":
+                return port.device
+        return None
