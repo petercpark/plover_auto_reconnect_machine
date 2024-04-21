@@ -74,6 +74,6 @@ class AutoReconnectMachine:
     
     def _sk_port(self):
         for port in list_ports.comports():
-            if port.manufacturer == "StenoKeyboards":
+            if port.manufacturer.lower() == "stenokeyboards":
                 return port.device
         return None
