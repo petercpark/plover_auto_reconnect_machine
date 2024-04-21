@@ -68,12 +68,12 @@ class AutoReconnectMachine:
         for port in list_ports.comports():
             if port.device == portName:
                 return True
-            if port.manufacturer.lower() == "stenokeyboards":
+            if port.manufacturer and port.manufacturer.lower() == "stenokeyboards":
                 return True
         return False
     
     def _sk_port(self):
         for port in list_ports.comports():
-            if port.manufacturer.lower() == "stenokeyboards":
+            if  port.manufacturer and port.manufacturer.lower() == "stenokeyboards":
                 return port.device
         return None
